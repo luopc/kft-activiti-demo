@@ -68,10 +68,7 @@
 
     <div class="arch template">
         <ul>
-            <li>
-                Activiti版本：公共版本（${prop['activiti.version']}）
-                <c:if test="${prop['activiti.version'] != prop['activiti.engine.version']}">&nbsp;引擎<strong>特定</strong>版本（${prop['activiti.engine.version']}）</c:if>
-            </li>
+            <li>Activiti版本：${prop['activiti.version']}</li>
             <li>Spring版本：${prop['spring.version']}</li>
             <li>Hibernate：${prop['hibernate.version']}</li>
             <li>使用<a href="http://maven.apache.org" target="_blank">Maven</a>管理依赖</li>
@@ -92,15 +89,19 @@
             <li>动态表单</li>
             <li>外置表单</li>
             <li>个人待办任务汇总</li>
-            <li>分页查询(<font color='red'>New</font>)</li>
-            <li>流程定义缓存(<font color='red'>New</font>)</li>
-            <li>集成Activiti Modeler(<font color='red'>New</font>)</li>
+            <li>分页查询</li>
+            <li>流程定义缓存</li>
+            <li>集成Activiti Modeler[5.17+](<font color='red'>New</font>)</li>
+            <li>引擎参数(<font color='red'>New</font>)</li>
+            <li>引擎数据库查看(<font color='red'>New</font>)</li>
+            <li>引擎内置用户与组(<font color='red'>New</font>)</li>
+            <li>定时作业管理(启动timerExample流程)(<font color='red'>New</font>)</li>
         </ul>
     </div>
 
     <div class="links template">
         <p>
-            <b>Demo<span style="color: red">Wiki</span>：</b><a target="_blank" href="https://github.com/henryyan/kft-activiti-demo/wiki">https://github.com/henryyan/kft-activiti-demo/wiki</a>
+            <b><span style="color: red">《Activiti实战》</span></b>：<a target="_blank" href="http://www.kafeitu.me/activiti-in-action.html">http://www.kafeitu.me/activiti-in-action.html</a>
         </p>
         <p>
             <b>Demo<span style="color: red">源码</span>：</b><a target="_blank" href="https://github.com/henryyan/kft-activiti-demo">https://github.com/henryyan/kft-activiti-demo</a>
@@ -116,7 +117,7 @@
     <div class="aboutme template">
         <ul>
             <li>
-                <b>作者：</b><a target="_blnak" href="http://www.kafeitu.me/?f=kad">咖啡兔</a>
+                <b>作者：</b><a target="_blnak" href="http://www.kafeitu.me/?f=kad">咖啡兔(闫洪磊)</a>
             </li>
             <li>
                 <b>QQ：</b>576525789
@@ -127,8 +128,8 @@
             <li>
                 <b>QQ群：</b>
                 <ul>
-                    <li>Activiti中文群1(<span style="color:red">已满</span>)：236540304</li>
-                    <li>Activiti中文群2(<span style="color:green;font-weight: bold">欢迎</span>)：23539326</li>
+                    <li>Activiti中文群1(<span style="color:green;font-weight: bold">欢迎</span>)：236540304</li>
+                    <li>Activiti中文群2(<span style="color:red">已满</span>)：23539326</li>
                     <li>Activiti中文群3(<span style="color:red">已满</span>)：139983080</li>
                     <li>Activiti中文群4(<span style="color:red">已满</span>)：327913744</li>
                 </ul>
@@ -139,16 +140,15 @@
     <div class="rest template">
         <p>在web.xml中映射了两个两个Servlet</p>
         <dl>
-            <dt>ExplorerRestletServlet</dt>
+            <dt>ModelRestServlet</dt>
             <dd>
                 <p>针对Activiti Modeler的Rest接口，映射路径：/service/*</p>
             </dd>
-            <dt>RestletServlet</dt>
+            <dt>RestServlet</dt>
             <dd>
                 <p>官方提供的完整Rest接口</p>
                 <p>访问路径：http://localhost/yourappname/<用户手册提供的Rest地址></p>
                 <p>映射路径：/rest/*</p>
-                <p><a href="http://www.kafeitu.me/activiti/2013/01/12/kft-activiti-demo-rest.html">如何使用Activiti Rest模块</a></p>
             </dd>
         </dl>
     </div>

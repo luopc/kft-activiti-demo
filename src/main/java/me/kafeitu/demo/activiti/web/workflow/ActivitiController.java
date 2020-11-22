@@ -17,6 +17,8 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import me.kafeitu.demo.activiti.cmd.JumpActivityCmd;
 import me.kafeitu.demo.activiti.service.activiti.WorkflowProcessDefinitionService;
 import me.kafeitu.demo.activiti.service.activiti.WorkflowTraceService;
@@ -29,11 +31,12 @@ import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.editor.constants.ModelDataJsonConstants;
 import org.activiti.editor.language.json.converter.BpmnJsonConverter;
 import org.activiti.engine.ManagementService;
+import org.activiti.engine.ProcessEngineConfiguration;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.identity.User;
-import org.activiti.engine.impl.bpmn.diagram.ProcessDiagramGenerator;
+import org.activiti.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.activiti.engine.impl.context.Context;
 import org.activiti.engine.impl.interceptor.Command;
 import org.activiti.engine.repository.Deployment;
@@ -42,10 +45,9 @@ import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.repository.ProcessDefinitionQuery;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
+import org.activiti.image.ProcessDiagramGenerator;
 import org.activiti.spring.ProcessEngineFactoryBean;
 import org.apache.commons.io.FilenameUtils;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,6 +89,9 @@ public class ActivitiController {
 
     @Autowired
     ProcessEngineFactoryBean processEngine;
+
+    @Autowired
+    ProcessEngineConfiguration processEngineConfiguration;
 
     /**
      * 流程定义列表
@@ -226,9 +231,11 @@ public class ActivitiController {
 //    Context.setProcessEngineConfiguration(defaultProcessEngine.getProcessEngineConfiguration());
 
         // 使用spring注入引擎请使用下面的这行代码
-        Context.setProcessEngineConfiguration(processEngine.getProcessEngineConfiguration());
+        processEngineConfiguration = processEngine.getProcessEngineConfiguration();
+        Context.setProcessEngineConfiguration((ProcessEngineConfigurationImpl) processEngineConfiguration);
 
-        InputStream imageStream = ProcessDiagramGenerator.generateDiagram(bpmnModel, "png", activeActivityIds);
+        ProcessDiagramGenerator diagramGenerator = processEngineConfiguration.getProcessDiagramGenerator();
+        InputStream imageStream = diagramGenerator.generateDiagram(bpmnModel, "png", activeActivityIds);
 
         // 输出资源内容到相应对象
         byte[] b = new byte[1024];
@@ -281,7 +288,7 @@ public class ActivitiController {
         BpmnModel bpmnModel = new BpmnXMLConverter().convertToBpmnModel(xtr);
 
         BpmnJsonConverter converter = new BpmnJsonConverter();
-        ObjectNode modelNode = converter.convertToJson(bpmnModel);
+        com.fasterxml.jackson.databind.node.ObjectNode modelNode = converter.convertToJson(bpmnModel);
         Model modelData = repositoryService.newModel();
         modelData.setKey(processDefinition.getKey());
         modelData.setName(processDefinition.getResourceName());

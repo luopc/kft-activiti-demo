@@ -6,19 +6,26 @@
 
 **项目主页**：[http://www.kafeitu.me/activiti/2012/05/26/kft-activiti-demo.html](http://www.kafeitu.me/activiti/2012/05/26/kft-activiti-demo.html)
 
-**在线演示**：[http://demo.kafeitu.me/kft-activiti-demo](http://demo.kafeitu.me/kft-activiti-demo)
+**在线演示**：[http://demo.kafeitu.me:8080/kft-activiti-demo](http://demo.kafeitu.me:8080/kft-activiti-demo)
 
 **Wiki文档**: [https://github.com/henryyan/kft-activiti-demo/wiki](https://github.com/henryyan/kft-activiti-demo/wiki)
 
-**QQ群在线支持：**: 23539326
+**QQ群在线支持：**: 236540304
+
+**《Activiti实战》**：Activiti项目Team Leader **Tijs Rademakers**认可并推荐，详情访问 [http://www.kafeitu.me/activiti-in-action.html](http://www.kafeitu.me/activiti-in-action.html)
+
+----
+![](https://raw.githubusercontent.com/henryyan/kft-activiti-demo/master/src/main/webapp/images/activiti-in-action.jpg)
+
+----
+去 <a href="http://product.china-pub.com/3770832" style="font-size:17pt;color:red">China-Pub</a>| <a href="http://item.jd.com/11599588.html" style="font-size:17pt;color:red">京东</a>| <a href="http://product.dangdang.com/23622065.html" style="font-size:17pt;color:red">当当网</a>| <a href="http://www.amazon.cn/Activiti%E5%AE%9E%E6%88%98-%E9%97%AB%E6%B4%AA%E7%A3%8A/dp/B00RRCOYAQ/ref=sr_1_4?ie=UTF8&qid=1420773978&sr=8-4&keywords=activiti" style="font-size:17pt;color:red">亚马逊</a> 购买
+----
 
 # 框架版本
 
-* Activiti: **5.15.1-kft**
+* Activiti: **5.19.0**
 
-* Spring: **3.2.5.RELEASE**
-
-* Hibernate: **4.1.4.Final**
+* Spring: **4.1.5.RELEASE**
 
 # 分支选择
 
@@ -26,6 +33,14 @@ Demo提供Maven版本和no-maven版本，分别适用于会用mavne和不会用m
 
 * **maven**分支：对应与git的`master`分支，便于安装和数据库初始化
 * **no-maven**分支：直接是一个eclipse工程，包含eclipse的项目配置文件和WEB-INF/lib下面的所有的jar文件
+
+## Maven方式运行
+
+> mvn clean jetty:run
+
+在 **pom.xml** 中配置了 **h2** 数据库与 **mysql** 数据库，默认启用 **h2** 数据库配置方式，如果使用 **mysql** 请启用mysql的配置(使用下面的命令)。
+
+> mvn clean jetty:run -Pmysql
 
 # 演示说明文档
 
@@ -35,6 +50,20 @@ Demo提供Maven版本和no-maven版本，分别适用于会用mavne和不会用m
 ![kft-activiti-demo截图](http://www.kafeitu.me/files/2012/05/kft-activiti-demo.png)
 
 ## Changelog
+
+### 1.14.0（2015-11-26）
+1. 添加查看引擎参数功能
+2. 添加查看引擎数据库功能
+3. 添加管理用户与组功能
+4. 添加作业管理功能
+5. 5.17+方式嵌入Rest服务
+
+### 1.13.0（2015-11-23）
+1. 集成基于5.17+的流程设计器(Activiti Modeler,很漂亮),demo依赖的版本支持5.17以上
+2. 数据库配置属性转移到pom.xml里面,可以直接修改`pom.xml`文件的参数,也可以在运行时通过`-Djdbc.password=111111`参数覆盖
+
+### 1.11~1.12(unknown)
+1. 内部消耗掉了，不要问我...
 
 ### 1.10.1（2014-04-23）
 1. 修复在最新版本Chrome（V34）不能运行Activiti Modeler问题
